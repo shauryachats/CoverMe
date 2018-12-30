@@ -4,9 +4,9 @@ import re
 
 line_regex = re.compile("^(?P<filename>.+):(?P<start_line>[0-9]+).(?P<start_column>[0-9]+),(?P<end_line>[0-9]+).(?P<end_column>[0-9]+) (?P<statements>[0-9]+) (?P<covered>[0-9]+)$")
 
-def parse_coverage_file(basepath, stdoutput):
+def parse_coverage_file(current_mode, stdoutput):
 	coverageData = {}
-	with open(basepath + '/cover.out', 'r') as f:
+	with open(current_mode['basepath'] + '/cover.out', 'r') as f:
 		for line in f.readlines():
 			match = line_regex.match(line)
 			if not match:
@@ -15,7 +15,7 @@ def parse_coverage_file(basepath, stdoutput):
 
 			starting_line = int(matchdict['start_line'])
 			ending_line = int(matchdict['end_line'])
-			file = matchdict['filename'] if matchdict['filename'].startswith('/') else self.settings['gopath'] + '/src/' + matchdict['filename']
+			file = matchdict['filename'] if matchdict['filename'].startswith('/') else current_mode['settings']['gopath'] + '/src/' + matchdict['filename']
 			isCovered = "uncovered" if matchdict['covered'] == "0" else "covered"
 
 			if file not in coverageData:

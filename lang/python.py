@@ -4,7 +4,7 @@ import re
 
 line_regex = re.compile("(?P<filename>[a-z.]+)( )+(?P<stmts>[0-9]+)( )+(?P<miss>[0-9]+)( )+(?P<cover>[0-9]+%)( )+(?P<missing>[0-9][0-9, -]*)")
 
-def parse_coverage_file(basepath, stdoutput):
+def parse_coverage_file(current_mode, stdoutput):
 	print(stdoutput)
 	coverageData = {}
 	for line in stdoutput:
@@ -14,7 +14,7 @@ def parse_coverage_file(basepath, stdoutput):
 		matchdict = match.groupdict()
 		print(matchdict)
 
-		filename = basepath + '/' + matchdict['filename'] 
+		filename = current_mode['basepath'] + '/' + matchdict['filename'] 
 		coverageData[filename] = []
 
 		missing_lines = matchdict['missing'].replace(' ','').split(',')

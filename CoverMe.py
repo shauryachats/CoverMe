@@ -9,6 +9,7 @@ import importlib
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
+SETTINGS_FILE = 'CoverMe.sublime-settings'
 COVER_MODE_FILE = 'CoverMeModes.sublime-settings'
 
 #
@@ -45,7 +46,7 @@ class CoverMe(sublime_plugin.TextCommand):
 			self.set_status("Tests ran successful.")
 			self.cover_object = importlib.import_module('lang.' + self.current_mode['type'])
 			print("cover object module: ", self.cover_object)
-			coverage_data = self.cover_object.parse_coverage_file(self.current_mode['basepath'], stdoutput)
+			coverage_data = self.cover_object.parse_coverage_file(self.current_mode, stdoutput)
 			mark_coverage(self.view, coverage_data)
 		else:
 			self.set_status("Tests failed with return code " + str(retval))
@@ -73,8 +74,8 @@ class CoverMe(sublime_plugin.TextCommand):
 	#	Gets the respective cover objects according to the file extension.
 	#
 	def get_cover_objects(self, filename):
-		with open(os.path.dirname(__file__) + '/matching.json') as f:
-			matches = json.load(f)
+		self.settings = sublime.load_settings(SETTINGS_FILE)
+		matches = self.settings.get('matching')
 		extension = filename.split('.')[-1]
 		return [ coverobj for coverobj in matches if extension == matches[coverobj] ]
 
@@ -87,6 +88,7 @@ class CoverMe(sublime_plugin.TextCommand):
 		for cover_object in cover_objects:
 			for cover_mode in all_cover_modes.get(cover_object):
 				cover_mode['type'] = cover_object
+				cover_mode['settings'] = self.settings.get(cover_object)
 				cover_modes.append(cover_mode)	
 		return cover_modes
 
