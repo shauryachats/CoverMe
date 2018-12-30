@@ -1,16 +1,18 @@
 {
-	// Global variables required by the cover object.
-	// Should be overriden.
-	"go" : {
-		"gopath" : "/home/shauryachats/go",
-	},
-	"python" : {
-	
-	},
 	// DO NOT OVERRIDE THIS PARAMETER
 	// This parameter matches the cover object to its respective extension.
 	"matching" : {
 		"go" : "go",
 		"python" : "py"
+	},
+
+	// Global variables required by the cover object.
+	// Should be overriden.
+	"go" : {
+		// GOPATH
+		"GOPATH" : "/home/shauryachats/go"
+	},
+	"python" : {
+	
 	}
 }

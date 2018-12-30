@@ -13,7 +13,7 @@ SETTINGS_FILE = 'CoverMe.sublime-settings'
 COVER_MODE_FILE = 'CoverMeModes.sublime-settings'
 
 #
-#	mark coverage according
+#	Mark coverage according to the coverage data returned from the cover object.
 #
 def mark_coverage(view, coverage_data):
 	current_file = sublime.active_window().active_view().file_name()
@@ -36,7 +36,14 @@ class CoverMe(sublime_plugin.TextCommand):
 	def run_tests(self):
 		self.set_status("Running tests for " + self.current_mode['type'])
 		os.chdir(self.current_mode['basepath'])
-		pid = subprocess.Popen(';'.join(self.current_mode['commands']), shell = True, stdout = subprocess.PIPE)
+		# Add environment variables
+		print(self.settings.get('go'))
+		env = os.environ.copy()
+		for key in self.current_mode['settings']:
+			print(key, self.current_mode['settings'][key])
+			env[key] = self.current_mode['settings'][key]
+		print(env)
+		pid = subprocess.Popen(';'.join(self.current_mode['commands']), shell = True, env = env, stdout = subprocess.PIPE)
 		stdoutput = []
 		for line in pid.stdout:
 			stdoutput.append(line.decode('utf-8'))
@@ -47,6 +54,7 @@ class CoverMe(sublime_plugin.TextCommand):
 			self.cover_object = importlib.import_module('lang.' + self.current_mode['type'])
 			print("cover object module: ", self.cover_object)
 			coverage_data = self.cover_object.parse_coverage_file(self.current_mode, stdoutput)
+			print("coverage_data", coverage_data)
 			mark_coverage(self.view, coverage_data)
 		else:
 			self.set_status("Tests failed with return code " + str(retval))
@@ -103,5 +111,3 @@ class CoverMe(sublime_plugin.TextCommand):
 		self.cover_modes = self.get_cover_modes(cover_objects)
 		print("cover_modes", self.cover_modes)
 		self.draw_quick_panel()
-
-

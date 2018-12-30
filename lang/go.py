@@ -15,7 +15,7 @@ def parse_coverage_file(current_mode, stdoutput):
 
 			starting_line = int(matchdict['start_line'])
 			ending_line = int(matchdict['end_line'])
-			file = matchdict['filename'] if matchdict['filename'].startswith('/') else current_mode['settings']['gopath'] + '/src/' + matchdict['filename']
+			file = matchdict['filename'] if matchdict['filename'].startswith('/') else current_mode['settings']['GOPATH'] + '/src/' + matchdict['filename']
 			isCovered = "uncovered" if matchdict['covered'] == "0" else "covered"
 
 			if file not in coverageData:
