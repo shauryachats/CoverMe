@@ -1,0 +1,25 @@
+{
+	"go" : [
+		{
+			"title" : "Cover package (single)",
+			"commands" : [ 
+				"go test -coverprofile cover.out" 
+			]
+		},
+		{
+			"title" : "Cover package (integration)",
+			"commands" : [
+				"go test -coverpkg=./... ./... -coverprofile cover.out"
+			]
+		}
+	],
+	"python" : [
+		{
+			"title" : "Cover single file",
+			"commands" : [
+				"coverage run --include *.py",
+				"coverage report -m"
+			]
+		}
+	]
+}

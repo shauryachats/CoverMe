@@ -1,0 +1,4 @@
+mode: set
+/home/shauryachats/.config/sublime-text-3/Packages/CoverMe/example/go/main.go:3.36,4.16 1 1
+/home/shauryachats/.config/sublime-text-3/Packages/CoverMe/example/go/main.go:8.2,9.14 2 1
+/home/shauryachats/.config/sublime-text-3/Packages/CoverMe/example/go/main.go:4.16,7.3 1 0

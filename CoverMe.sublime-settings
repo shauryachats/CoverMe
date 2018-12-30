@@ -1,0 +1,8 @@
+{
+	"show_covered" : "true",
+	"go" : {
+		"gopath" : "/home/shauryachats/go",
+	},
+	"python" : {
+	}
+}
