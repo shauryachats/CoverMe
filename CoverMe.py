@@ -40,9 +40,8 @@ class CoverMe(sublime_plugin.TextCommand):
 		print(self.settings.get('go'))
 		env = os.environ.copy()
 		for key in self.current_mode['settings']:
-			print(key, self.current_mode['settings'][key])
 			env[key] = self.current_mode['settings'][key]
-		print(env)
+
 		pid = subprocess.Popen(';'.join(self.current_mode['commands']), shell = True, env = env, stdout = subprocess.PIPE)
 		stdoutput = []
 		for line in pid.stdout:
@@ -81,20 +80,24 @@ class CoverMe(sublime_plugin.TextCommand):
 	#
 	#	Gets the respective cover objects according to the file extension.
 	#
-	def get_cover_objects(self, filename):
+	def get_raw_cover_modes(self, filename):
 		self.settings = sublime.load_settings(SETTINGS_FILE)
 		matches = self.settings.get('matching')
 		extension = filename.split('.')[-1]
-		return [ coverobj for coverobj in matches if extension == matches[coverobj] ]
+		cover_objects = [ coverobj for coverobj in matches if extension == matches[coverobj] ]
+		all_cover_modes = sublime.load_settings(COVER_MODE_FILE)
+		
+		return {
+			cover_object: all_cover_modes.get(cover_object) for cover_object in cover_objects
+		}
 
 	#
-	#	Gets all the options for covering to view on the quick draw bar.
+	#	Process cover modes into drawable selection panel
 	#
-	def get_cover_modes(self, cover_objects):
-		all_cover_modes = sublime.load_settings(COVER_MODE_FILE)
+	def process_raw_cover_modes(self, cover_objects):
 		cover_modes = []
 		for cover_object in cover_objects:
-			for cover_mode in all_cover_modes.get(cover_object):
+			for cover_mode in cover_objects[cover_object]:
 				cover_mode['type'] = cover_object
 				cover_mode['settings'] = self.settings.get(cover_object)
 				cover_modes.append(cover_mode)	
@@ -104,10 +107,14 @@ class CoverMe(sublime_plugin.TextCommand):
 	#	The magic begins here.
 	#
 	def run(self, edit):
-		# identify file type.
-		print(os.getcwd())
-		cover_objects = self.get_cover_objects(self.view.file_name())
-		print("cover_objects", cover_objects)
-		self.cover_modes = self.get_cover_modes(cover_objects)
-		print("cover_modes", self.cover_modes)
+		# check if project file is present, import cover modes from it.
+		project_file = sublime.active_window().active_view().settings()
+		if project_file.has('CoverMe'):
+			self.raw_cover_modes = project_file.get('CoverMe')
+		# else load default cover modes according to file extension.
+		else:
+			self.raw_cover_modes = self.get_raw_cover_modes(self.view.file_name())
+		print("raw_cover_modes", self.raw_cover_modes)
+		self.cover_modes = self.process_raw_cover_modes(self.raw_cover_modes)
+		# Draw cover mode selection panel
 		self.draw_quick_panel()
