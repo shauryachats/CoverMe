@@ -1,3 +1,3 @@
 [
-	{ "keys" : ["ctrl+t"], "command" : "cover_me" },
+	{ "keys" : ["ctrl+shift+c"], "command" : "cover_me" },
 ]

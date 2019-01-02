@@ -7,5 +7,4 @@ func TestSomeFuncToTest(t *testing.T) {
 	if val != 25 {
 		t.Error("Failed test!")
 	}
-	// val = SomeFuncToTest(0)
 }

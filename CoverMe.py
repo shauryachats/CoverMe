@@ -59,7 +59,7 @@ class CoverMe(sublime_plugin.TextCommand):
 			self.set_status("Tests failed with return code " + str(retval))
 
 	def draw_quick_panel(self):
-		items = [[ mode['type'] + ": " + mode['title'], ';'.join(mode['commands']) ] for mode in self.cover_modes ]
+		items = [[ "[CoverMe] " + mode['type'] + ": " + mode['title'], ';'.join(mode['commands']) ] for mode in self.cover_modes ]
 		sublime.active_window().show_quick_panel(items, self.quick_panel_callback)
 
 	#
