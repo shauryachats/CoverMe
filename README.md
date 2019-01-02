@@ -29,16 +29,18 @@ Update the required variables according to the `Settings - Default` file.
 
 For example, for Go:
 
-`"go" : {
+```
+"go" : {
 	"GOPATH" : your go path goes here
-}`
+}
+```
 
 After this, to view code coverage, press `ctrl+shift+c` (you can override this in keymap) to be presented with various coverage modes, select one and coverage would be presented according to that.
 
 #### Optional : Project level settings
 For some projects, you would need to write your own custom coverage modes. To do that, create a new Sublime Project and in the `.sublime-project` file:
 
-`
+```
 {
 	"folders":
 	[
@@ -60,13 +62,16 @@ For some projects, you would need to write your own custom coverage modes. To do
 			]
 		}
 	}
-}`
+}
+```
 
 Under the `settings` key, create a `CoverMe` key containing the list of coverage modes for each programming type.
 
 Each coverage mode is of the form:
-`{
+```
+{
 	"title" : the title on the quick draw panel,
 	"basepath" : the base path for the project, where the commands are to be run,
 	"commands" : a list of shell commands, which are run to produce coverage information. 
-}`
+}
+```
