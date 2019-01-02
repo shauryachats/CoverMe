@@ -8,7 +8,7 @@
 
 	// Global variables required by the cover object.
 	// Should be overriden.
-	"go" : {
+	"go" : { 
 		// GOPATH
 		"GOPATH" : "/home/shauryachats/go"
 	},

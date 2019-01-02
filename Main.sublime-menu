@@ -1,0 +1,33 @@
+[
+    {
+        "caption": "Preferences", 
+        "id": "preferences", 
+        "children": [
+            {
+                "caption": "Package Settings", 
+                "id": "package-settings", 
+                "children": [
+                    {
+                        "caption": "CoverMe", 
+                        "children": [
+                            {
+                                "caption": "Settings \u2013 Default", 
+                                "args": {
+                                    "file": "${packages}/CoverMe/CoverMe.sublime-settings"
+                                }, 
+                                "command": "open_file"
+                            }, 
+                            {
+                                "caption": "Settings \u2013 User", 
+                                "args": {
+                                    "file": "${packages}/User/CoverMe.sublime-settings"
+                                }, 
+                                "command": "open_file"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
