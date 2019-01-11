@@ -7,8 +7,6 @@ import subprocess
 import json
 import importlib
 
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-
 SETTINGS_FILE = 'CoverMe.sublime-settings'
 COVER_MODE_FILE = 'CoverMeModes.sublime-settings'
 
@@ -50,10 +48,8 @@ class CoverMe(sublime_plugin.TextCommand):
 		retval = pid.wait()
 		if retval == 0:
 			self.set_status("Tests ran successful.")
-			self.cover_object = importlib.import_module('lang.' + self.current_mode['type'])
-			print("cover object module: ", self.cover_object)
+			self.cover_object = importlib.import_module('.lang.' + self.current_mode['type'], package='CoverMe')
 			coverage_data = self.cover_object.parse_coverage_file(self.current_mode, stdoutput)
-			print("coverage_data", coverage_data)
 			mark_coverage(self.view, coverage_data)
 		else:
 			self.set_status("Tests failed with return code " + str(retval))
