@@ -67,8 +67,17 @@ class CoverMe(sublime_plugin.TextCommand):
 			return 
 		erase_coverage(self.view)
 		self.current_mode = self.cover_modes[arg]
+		filename = self.view.file_name()
 		if 'basepath' not in self.current_mode:
-			self.current_mode['basepath'] = os.path.dirname(self.view.file_name())
+			if "project" not in self.current_mode or not self.current_mode["project"]:
+				self.current_mode['basepath'] = os.path.dirname(self.view.file_name())
+			else:
+				for entry in self.view.window().project_data()["folders"]:
+					folder = entry["path"]
+					if folder in filename:
+						self.current_mode["basepath"] = folder
+						break
+		self.set_status("Running command in " + self.current_mode["basepath"])
 		# Start test running on a non blocking thread.
 		thread = threading.Thread(target = self.run_tests)
 		thread.start()

@@ -21,5 +21,14 @@
 				"coverage report -m"
 			]
 		}
+	],
+	"dart": [
+		{
+			"title": "Cover project",
+			"project": true,
+			"commands": [
+				"dart test --coverage=test/coverage"
+			]
+		}
 	]
 }
