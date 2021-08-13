@@ -24,7 +24,8 @@
 	],
 	"dart": [
 		{
-			"title": "Cover all",
+			"title": "Cover project",
+			"project": true,
 			"commands": [
 				"dart test --coverage=test/coverage"
 			]

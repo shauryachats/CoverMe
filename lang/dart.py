@@ -9,6 +9,7 @@ def resolve_uri(uri, package_dir):
 	"""
 	file = uri [uri.find("/") + 1:]
 	path = package_dir + "\\lib\\" + file.replace("/", "\\")	
+	return path
 
 def parse_coverage_file(current_mode, stdoutput): 
 	# Assumes tests were run with:
