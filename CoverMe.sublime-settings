@@ -3,7 +3,8 @@
 	// This parameter matches the cover object to its respective extension.
 	"matching" : {
 		"go" : "go",
-		"python" : "py"
+		"python" : "py",
+		"dart": "dart",
 	},
 
 	// Global variables required by the cover object.
@@ -14,5 +15,8 @@
 	},
 	"python" : {
 	
+	},
+	"dart": { 
+
 	}
 }

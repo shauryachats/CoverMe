@@ -21,5 +21,13 @@
 				"coverage report -m"
 			]
 		}
+	],
+	"dart": [
+		{
+			"title": "Cover all",
+			"commands": [
+				"dart test --coverage=test/coverage"
+			]
+		}
 	]
 }

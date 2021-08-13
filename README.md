@@ -6,6 +6,7 @@ This plugin can easily be extended for any testing framework for any programming
 #### Prograaming languages supported
 - Go's `go test`
 - Python's `unittest` and `coverage.py`
+- Dart's `dart test`
 
 The basic paradigm followed by the plugin is:
 - Run the commands necessary to generate coverage output.
